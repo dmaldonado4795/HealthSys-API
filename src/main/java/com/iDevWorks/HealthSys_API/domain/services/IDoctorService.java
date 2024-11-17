@@ -11,4 +11,6 @@ public interface IDoctorService {
     Optional<DoctorEntity> findById(long id);
 
     DoctorEntity save(DoctorEntity entity);
+
+    DoctorEntity update(DoctorEntity entity);
 }

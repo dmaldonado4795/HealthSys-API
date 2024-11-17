@@ -1,9 +1,11 @@
 package com.iDevWorks.HealthSys_API.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.cglib.core.Local;
 
 import java.time.LocalDateTime;
 
@@ -24,5 +26,6 @@ public class MedicalHistoryEntity {
     @ManyToOne
     @JoinColumn(name = "doctorId")
     private DoctorEntity doctor;
-    private LocalDateTime lastUpdated;
+    @JsonIgnore
+    private LocalDateTime lastUpdated = LocalDateTime.now();
 }

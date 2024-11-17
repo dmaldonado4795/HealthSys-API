@@ -16,5 +16,6 @@ public class DoctorEntity {
     @Column(name = "id")
     private Long doctorId;
     private String name;
+    private String specialty;
     private String phone;
 }

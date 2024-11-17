@@ -13,6 +13,4 @@ public interface IPatientService {
     PatientEntity save(PatientEntity entity);
 
     PatientEntity update(PatientEntity entity);
-
-    PatientEntity patch(PatientEntity entity);
 }

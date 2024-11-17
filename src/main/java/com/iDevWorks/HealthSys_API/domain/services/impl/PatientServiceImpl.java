@@ -34,19 +34,6 @@ public class PatientServiceImpl implements IPatientService {
     @Override
     public PatientEntity update(PatientEntity entity) {
         return repository.findById(entity.getPatientId()).map(resp -> {
-            resp.setName(entity.getName());
-            resp.setDateOfBirth(entity.getDateOfBirth());
-            resp.setGender(entity.getGender());
-            resp.setAddress(entity.getAddress());
-            resp.setPhone(entity.getPhone());
-            resp.setEmail(entity.getEmail());
-            return repository.save(resp);
-        }).orElseThrow(() -> new EntityNotFoundException("Patient not found with id"));
-    }
-
-    @Override
-    public PatientEntity patch(PatientEntity entity) {
-        return repository.findById(entity.getPatientId()).map(resp -> {
             if (!Objects.equals(resp.getName(), entity.getName()))
                 resp.setName(entity.getName());
             if (!Objects.equals(resp.getDateOfBirth(), entity.getDateOfBirth()))
