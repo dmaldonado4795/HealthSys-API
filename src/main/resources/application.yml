@@ -1,7 +1,7 @@
 server:
   port: 8081
   servlet:
-    context-path: /healthsy/api
+    context-path: /health-sys/api/v1
 spring:
   application:
     name: HealthSys-API

@@ -39,9 +39,7 @@ CREATE TABLE Invoice (
   id BIGINT AUTO_INCREMENT PRIMARY KEY,
   totalAmount DOUBLE NOT NULL,
   date DATE NOT NULL,
-  patient_id BIGINT,
   appointment_id BIGINT,
-  CONSTRAINT fk_patient_invoice FOREIGN KEY (patient_id) REFERENCES Patient(id),
   CONSTRAINT fk_appointment_invoice FOREIGN KEY (appointment_id) REFERENCES Appointment(id)
 );
 
@@ -70,7 +68,7 @@ INSERT INTO MedicalHistory (description, patient_id, doctor_id, lastUpdated) VAL
 ('Allergic to penicillin. Recommended allergy testing.', 3, 3, '2024-09-15');
 
 -- Insert data into Invoice table
-INSERT INTO Invoice (totalAmount, date, patient_id, appointment_id) VALUES
-(150.00, '2024-09-15', 1, 1),
-(200.00, '2024-09-16', 3, 2),
-(250.00, '2024-09-17', 2, 3);
+INSERT INTO Invoice (totalAmount, date, appointment_id) VALUES
+(150.00, '2024-09-15', 1),
+(200.00, '2024-09-16', 2),
+(250.00, '2024-09-17', 3);

@@ -2,9 +2,11 @@ package com.iDevWorks.HealthSys_API.web.controllers;
 
 import com.iDevWorks.HealthSys_API.common.helpers.ResponseHelper;
 import com.iDevWorks.HealthSys_API.common.utils.ObjectMappingUtil;
-import com.iDevWorks.HealthSys_API.domain.entities.DoctorEntity;
-import com.iDevWorks.HealthSys_API.domain.services.IDoctorService;
-import com.iDevWorks.HealthSys_API.web.dtos.DoctorRequestDto;
+import com.iDevWorks.HealthSys_API.domain.entities.AppointmentEntity;
+import com.iDevWorks.HealthSys_API.domain.entities.InvoiceEntity;
+import com.iDevWorks.HealthSys_API.domain.services.IAppointmentService;
+import com.iDevWorks.HealthSys_API.domain.services.IInvoiceService;
+import com.iDevWorks.HealthSys_API.web.dtos.InvoiceDto;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,42 +20,50 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "doctor")
-public class DoctorController {
+@RequestMapping(path = "invoice")
+public class InvoiceController {
     @Autowired
-    private IDoctorService service;
+    private IAppointmentService appointmentService;
+    @Autowired
+    private IInvoiceService invoiceService;
 
     @GetMapping(path = "find-all")
-    public ResponseEntity<Map<String, Object>> getDoctors() {
+    public ResponseEntity<Map<String, Object>> getInvoices() {
         Map<String, Object> resp = new HashMap<>();
-        List<DoctorEntity> doctors = service.findAll();
-        if (!doctors.isEmpty()) {
-            resp.put(ResponseHelper.DATA_KEY, doctors);
+        List<InvoiceEntity> invoices = invoiceService.findAll();
+        if (!invoices.isEmpty()) {
+            resp.put(ResponseHelper.DATA_KEY, invoices);
             return ResponseEntity.ok(resp);
         } else {
-            resp.put(ResponseHelper.ERROR_KEY, "No registered doctors found");
+            resp.put(ResponseHelper.ERROR_KEY, ResponseHelper.NoRegisteredItem("invoices"));
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(resp);
         }
     }
 
     @GetMapping(path = "find-by-id/{id}")
-    public ResponseEntity<Map<String, Object>> getDoctorById(@PathVariable long id) {
+    public ResponseEntity<Map<String, Object>> getInvoice(@PathVariable long id) {
         Map<String, Object> resp = new HashMap<>();
-        Optional<DoctorEntity> doctor = service.findById(id);
-        if (doctor.isPresent()) {
-            resp.put(ResponseHelper.ERROR_KEY, doctor.get());
+        Optional<InvoiceEntity> invoice = invoiceService.findById(id);
+        if (invoice.isPresent()) {
+            resp.put(ResponseHelper.DATA_KEY, invoice);
             return ResponseEntity.ok(resp);
         } else {
-            resp.put(ResponseHelper.ERROR_KEY, "Doctor not found");
+            resp.put(ResponseHelper.ERROR_KEY, ResponseHelper.ItemNotFound("Invoice"));
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(resp);
         }
     }
 
     @PostMapping(path = "save")
-    public ResponseEntity<Map<String, Object>> saveDoctor(@Valid @RequestBody DoctorRequestDto dto) {
+    public ResponseEntity<Map<String, Object>> saveInvoice(@Valid @RequestBody InvoiceDto dto) {
         Map<String, Object> resp = new HashMap<>();
         try {
-            DoctorEntity entity = service.save(ObjectMappingUtil.toDoctorEntity(0, dto));
+            Optional<AppointmentEntity> appointment = appointmentService.findById(dto.getAppointment().getAppointmentId());
+            if (appointment.isEmpty()) {
+                resp.put(ResponseHelper.ERROR_KEY, ResponseHelper.ItemNotFound("Appointment"));
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
+            }
+
+            InvoiceEntity entity = invoiceService.save(ObjectMappingUtil.toInvoice(0, dto));
             resp.put(ResponseHelper.DATA_KEY, entity);
             return ResponseEntity.ok(resp);
         } catch (IllegalArgumentException e) {
@@ -69,10 +79,16 @@ public class DoctorController {
     }
 
     @PutMapping(path = "update/{id}")
-    public ResponseEntity<Map<String, Object>> updateDoctor(@PathVariable long id, @Valid @RequestBody DoctorRequestDto dto) {
+    public ResponseEntity<Map<String, Object>> updateInvoice(@PathVariable long id, @Valid @RequestBody InvoiceDto dto) {
         Map<String, Object> resp = new HashMap<>();
         try {
-            DoctorEntity entity = service.update(ObjectMappingUtil.toDoctorEntity(id, dto));
+            Optional<AppointmentEntity> appointment = appointmentService.findById(dto.getAppointment().getAppointmentId());
+            if (appointment.isEmpty()) {
+                resp.put(ResponseHelper.ERROR_KEY, ResponseHelper.ItemNotFound("Appointment"));
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
+            }
+
+            InvoiceEntity entity = invoiceService.update(ObjectMappingUtil.toInvoice(id, dto));
             resp.put(ResponseHelper.DATA_KEY, entity);
             return ResponseEntity.ok(resp);
         } catch (IllegalArgumentException e) {

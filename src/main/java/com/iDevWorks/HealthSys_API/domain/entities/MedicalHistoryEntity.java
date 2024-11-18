@@ -27,5 +27,5 @@ public class MedicalHistoryEntity {
     @JoinColumn(name = "doctorId")
     private DoctorEntity doctor;
     @JsonIgnore
-    private LocalDateTime lastUpdated = LocalDateTime.now();
+    private LocalDateTime lastUpdated;
 }

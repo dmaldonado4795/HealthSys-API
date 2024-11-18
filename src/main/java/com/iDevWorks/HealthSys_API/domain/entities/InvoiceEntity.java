@@ -1,5 +1,6 @@
 package com.iDevWorks.HealthSys_API.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,10 +19,8 @@ public class InvoiceEntity {
     @Column(name = "id")
     private Long invoiceId;
     private Double totalAmount;
+    @JsonIgnore
     private LocalDate date;
-    @ManyToOne
-    @JoinColumn(name = "patientId")
-    private PatientEntity patient;
     @ManyToOne
     @JoinColumn(name = "appointmentId")
     private AppointmentEntity appointment;

@@ -1,7 +1,6 @@
 package com.iDevWorks.HealthSys_API.domain.services.impl;
 
 import com.iDevWorks.HealthSys_API.domain.entities.InvoiceEntity;
-import com.iDevWorks.HealthSys_API.domain.entities.PatientEntity;
 import com.iDevWorks.HealthSys_API.domain.services.IInvoiceService;
 import com.iDevWorks.HealthSys_API.infrastructure.repositories.InvoiceRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -39,8 +38,6 @@ public class InvoiceServiceImpl implements IInvoiceService {
                 resp.setTotalAmount(entity.getTotalAmount());
             if (!Objects.equals(resp.getDate(), entity.getDate()))
                 resp.setDate(entity.getDate());
-            if (!Objects.equals(resp.getPatient(), entity.getPatient()))
-                resp.setPatient(entity.getPatient());
             if (!Objects.equals(resp.getAppointment(), entity.getAppointment()))
                 resp.setAppointment(entity.getAppointment());
             return repository.save(resp);
