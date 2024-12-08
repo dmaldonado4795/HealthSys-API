@@ -1,7 +1,7 @@
 package com.iDevWorks.HealthSys_API.web.controllers;
 
 import com.iDevWorks.HealthSys_API.common.helpers.ResponseHelper;
-import com.iDevWorks.HealthSys_API.common.utils.ObjectMappingUtil;
+import com.iDevWorks.HealthSys_API.common.utils.MapperObjectUtil;
 import com.iDevWorks.HealthSys_API.domain.entities.AppointmentEntity;
 import com.iDevWorks.HealthSys_API.domain.entities.InvoiceEntity;
 import com.iDevWorks.HealthSys_API.domain.services.IAppointmentService;
@@ -63,7 +63,7 @@ public class InvoiceController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
             }
 
-            InvoiceEntity entity = invoiceService.save(ObjectMappingUtil.toInvoice(0, dto));
+            InvoiceEntity entity = invoiceService.save(MapperObjectUtil.toInvoice(0, dto));
             resp.put(ResponseHelper.DATA_KEY, entity);
             return ResponseEntity.ok(resp);
         } catch (IllegalArgumentException e) {
@@ -88,7 +88,7 @@ public class InvoiceController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
             }
 
-            InvoiceEntity entity = invoiceService.update(ObjectMappingUtil.toInvoice(id, dto));
+            InvoiceEntity entity = invoiceService.update(MapperObjectUtil.toInvoice(id, dto));
             resp.put(ResponseHelper.DATA_KEY, entity);
             return ResponseEntity.ok(resp);
         } catch (IllegalArgumentException e) {

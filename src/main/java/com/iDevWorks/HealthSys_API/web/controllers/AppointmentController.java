@@ -1,7 +1,7 @@
 package com.iDevWorks.HealthSys_API.web.controllers;
 
 import com.iDevWorks.HealthSys_API.common.helpers.ResponseHelper;
-import com.iDevWorks.HealthSys_API.common.utils.ObjectMappingUtil;
+import com.iDevWorks.HealthSys_API.common.utils.MapperObjectUtil;
 import com.iDevWorks.HealthSys_API.domain.entities.AppointmentEntity;
 import com.iDevWorks.HealthSys_API.domain.entities.DoctorEntity;
 import com.iDevWorks.HealthSys_API.domain.entities.PatientEntity;
@@ -73,7 +73,7 @@ public class AppointmentController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
             }
 
-            AppointmentEntity entity = appointmentService.save(ObjectMappingUtil.toAppointment(0, dto));
+            AppointmentEntity entity = appointmentService.save(MapperObjectUtil.toAppointment(0, dto));
             resp.put(ResponseHelper.DATA_KEY, entity);
             return ResponseEntity.ok(resp);
         } catch (IllegalArgumentException e) {
@@ -104,7 +104,7 @@ public class AppointmentController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
             }
 
-            AppointmentEntity entity = appointmentService.update(ObjectMappingUtil.toAppointment(id, dto));
+            AppointmentEntity entity = appointmentService.update(MapperObjectUtil.toAppointment(id, dto));
             resp.put(ResponseHelper.ERROR_KEY, entity);
             return ResponseEntity.ok(resp);
         } catch (IllegalArgumentException e) {

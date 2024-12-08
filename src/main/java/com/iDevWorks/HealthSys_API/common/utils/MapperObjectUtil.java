@@ -9,13 +9,29 @@ import java.time.LocalDateTime;
 /**
  * Utility class for mapping DTO objects to Entity objects.
  * Provides static methods to transform incoming data transfer objects (DTOs) into their corresponding domain entities.
- *
+ * <p>
  * This helps centralize the mapping logic and ensures consistency throughout the application.
  */
-public final class ObjectMappingUtil {
+public final class MapperObjectUtil {
 
-    private ObjectMappingUtil() {
+    private MapperObjectUtil() {
         // Prevent instantiation
+    }
+
+    /**
+     * Maps a {@link UserDto} to a {@link UserEntity}.
+     *
+     * @param id  the ID of the user.
+     * @param dto the {@link UserDto} containing user data.
+     * @return a {@link UserEntity} representing the user.
+     */
+    public static UserEntity toUserEntity(long id, UserDto dto) {
+        return new UserEntity(
+                id,
+                dto.getUsername(),
+                dto.getPassword(),
+                dto.isActive()
+        );
     }
 
     /**

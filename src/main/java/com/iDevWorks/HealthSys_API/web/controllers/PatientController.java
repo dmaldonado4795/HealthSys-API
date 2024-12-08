@@ -1,7 +1,7 @@
 package com.iDevWorks.HealthSys_API.web.controllers;
 
 import com.iDevWorks.HealthSys_API.common.helpers.ResponseHelper;
-import com.iDevWorks.HealthSys_API.common.utils.ObjectMappingUtil;
+import com.iDevWorks.HealthSys_API.common.utils.MapperObjectUtil;
 import com.iDevWorks.HealthSys_API.domain.entities.PatientEntity;
 import com.iDevWorks.HealthSys_API.domain.services.IPatientService;
 import com.iDevWorks.HealthSys_API.web.dtos.PatientRequestDto;
@@ -53,7 +53,7 @@ public class PatientController {
     public ResponseEntity<Map<String, Object>> savePatient(@Valid @RequestBody PatientRequestDto dto) {
         Map<String, Object> resp = new HashMap<>();
         try {
-            PatientEntity entity = service.save(ObjectMappingUtil.toPatientEntity(0, dto));
+            PatientEntity entity = service.save(MapperObjectUtil.toPatientEntity(0, dto));
             resp.put(ResponseHelper.DATA_KEY, entity);
             return ResponseEntity.ok(resp);
         } catch (IllegalArgumentException e) {
@@ -72,7 +72,7 @@ public class PatientController {
     public ResponseEntity<Map<String, Object>> updatePatient(@PathVariable long id, @Valid @RequestBody PatientRequestDto dto) {
         Map<String, Object> resp = new HashMap<>();
         try {
-            PatientEntity entity = service.update(ObjectMappingUtil.toPatientEntity(id, dto));
+            PatientEntity entity = service.update(MapperObjectUtil.toPatientEntity(id, dto));
             resp.put(ResponseHelper.DATA_KEY, entity);
             return ResponseEntity.ok(resp);
         } catch (IllegalArgumentException e) {

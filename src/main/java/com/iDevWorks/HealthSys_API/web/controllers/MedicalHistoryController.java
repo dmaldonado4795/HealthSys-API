@@ -1,7 +1,7 @@
 package com.iDevWorks.HealthSys_API.web.controllers;
 
 import com.iDevWorks.HealthSys_API.common.helpers.ResponseHelper;
-import com.iDevWorks.HealthSys_API.common.utils.ObjectMappingUtil;
+import com.iDevWorks.HealthSys_API.common.utils.MapperObjectUtil;
 import com.iDevWorks.HealthSys_API.domain.entities.DoctorEntity;
 import com.iDevWorks.HealthSys_API.domain.entities.MedicalHistoryEntity;
 import com.iDevWorks.HealthSys_API.domain.entities.PatientEntity;
@@ -73,7 +73,7 @@ public class MedicalHistoryController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
             }
 
-            MedicalHistoryEntity medicalHistoryEntity = medicalHistoryService.save(ObjectMappingUtil.toMedicalHistory(0, dto));
+            MedicalHistoryEntity medicalHistoryEntity = medicalHistoryService.save(MapperObjectUtil.toMedicalHistory(0, dto));
             resp.put(ResponseHelper.DATA_KEY, medicalHistoryEntity);
             return ResponseEntity.ok(resp);
         } catch (IllegalArgumentException e) {
@@ -104,7 +104,7 @@ public class MedicalHistoryController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
             }
 
-            MedicalHistoryEntity medicalHistoryEntity = medicalHistoryService.update(ObjectMappingUtil.toMedicalHistory(id, dto));
+            MedicalHistoryEntity medicalHistoryEntity = medicalHistoryService.update(MapperObjectUtil.toMedicalHistory(id, dto));
             resp.put(ResponseHelper.DATA_KEY, medicalHistoryEntity);
             return ResponseEntity.ok(resp);
         } catch (IllegalArgumentException e) {

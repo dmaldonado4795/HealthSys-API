@@ -2,9 +2,9 @@ package com.iDevWorks.HealthSys_API.web.controllers;
 
 import com.iDevWorks.HealthSys_API.common.helpers.ResponseHelper;
 import com.iDevWorks.HealthSys_API.common.utils.MapperObjectUtil;
-import com.iDevWorks.HealthSys_API.domain.entities.DoctorEntity;
-import com.iDevWorks.HealthSys_API.domain.services.IDoctorService;
-import com.iDevWorks.HealthSys_API.web.dtos.DoctorRequestDto;
+import com.iDevWorks.HealthSys_API.domain.entities.UserEntity;
+import com.iDevWorks.HealthSys_API.domain.services.IUserService;
+import com.iDevWorks.HealthSys_API.web.dtos.UserDto;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,43 +18,43 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "doctor")
-public class DoctorController {
+@RequestMapping(path = "user")
+public class UserController {
     @Autowired
-    private IDoctorService service;
+    private IUserService service;
 
     @GetMapping(path = "find-all")
-    public ResponseEntity<Map<String, Object>> getDoctors() {
+    public ResponseEntity<Map<String, Object>> getUsers() {
         Map<String, Object> resp = new HashMap<>();
-        List<DoctorEntity> doctors = service.findAll();
-        if (!doctors.isEmpty()) {
-            resp.put(ResponseHelper.DATA_KEY, doctors);
+        List<UserEntity> users = service.findAll();
+        if (!users.isEmpty()) {
+            resp.put(ResponseHelper.DATA_KEY, users);
             return ResponseEntity.ok(resp);
         } else {
-            resp.put(ResponseHelper.ERROR_KEY, "No registered doctors found");
+            resp.put(ResponseHelper.ERROR_KEY, ResponseHelper.NoRegisteredItem("users"));
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(resp);
         }
     }
 
     @GetMapping(path = "find-by-id/{id}")
-    public ResponseEntity<Map<String, Object>> getDoctorById(@PathVariable long id) {
+    public ResponseEntity<Map<String, Object>> getUser(@PathVariable long id) {
         Map<String, Object> resp = new HashMap<>();
-        Optional<DoctorEntity> doctor = service.findById(id);
-        if (doctor.isPresent()) {
-            resp.put(ResponseHelper.ERROR_KEY, doctor.get());
+        Optional<UserEntity> userEntity = service.findById(id);
+        if (userEntity.isPresent()) {
+            resp.put(ResponseHelper.DATA_KEY, userEntity);
             return ResponseEntity.ok(resp);
         } else {
-            resp.put(ResponseHelper.ERROR_KEY, "Doctor not found");
+            resp.put(ResponseHelper.ERROR_KEY, ResponseHelper.ItemNotFound("User"));
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(resp);
         }
     }
 
     @PostMapping(path = "save")
-    public ResponseEntity<Map<String, Object>> saveDoctor(@Valid @RequestBody DoctorRequestDto dto) {
+    public ResponseEntity<Map<String, Object>> saveUser(@Valid @RequestBody UserDto dto) {
         Map<String, Object> resp = new HashMap<>();
         try {
-            DoctorEntity entity = service.save(MapperObjectUtil.toDoctorEntity(0, dto));
-            resp.put(ResponseHelper.DATA_KEY, entity);
+            UserEntity userEntity = service.save(MapperObjectUtil.toUserEntity(0, dto));
+            resp.put(ResponseHelper.DATA_KEY, userEntity);
             return ResponseEntity.ok(resp);
         } catch (IllegalArgumentException e) {
             resp.put(ResponseHelper.ERROR_KEY, "Invalid input: " + e.getMessage());
@@ -69,11 +69,11 @@ public class DoctorController {
     }
 
     @PutMapping(path = "update/{id}")
-    public ResponseEntity<Map<String, Object>> updateDoctor(@PathVariable long id, @Valid @RequestBody DoctorRequestDto dto) {
+    public ResponseEntity<Map<String, Object>> updateUser(@PathVariable long id, @Valid @RequestBody UserDto dto) {
         Map<String, Object> resp = new HashMap<>();
         try {
-            DoctorEntity entity = service.update(MapperObjectUtil.toDoctorEntity(id, dto));
-            resp.put(ResponseHelper.DATA_KEY, entity);
+            UserEntity userEntity = service.update(MapperObjectUtil.toUserEntity(id, dto));
+            resp.put(ResponseHelper.DATA_KEY, userEntity);
             return ResponseEntity.ok(resp);
         } catch (IllegalArgumentException e) {
             resp.put(ResponseHelper.ERROR_KEY, "Invalid input: " + e.getMessage());
@@ -86,4 +86,5 @@ public class DoctorController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(resp);
         }
     }
+
 }

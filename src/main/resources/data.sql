@@ -1,3 +1,10 @@
+CREATE TABLE Application_User (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(25) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    active BOOLEAN NOT NULL
+);
+
 CREATE TABLE Patient (
   id BIGINT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
@@ -42,6 +49,11 @@ CREATE TABLE Invoice (
   appointment_id BIGINT,
   CONSTRAINT fk_appointment_invoice FOREIGN KEY (appointment_id) REFERENCES Appointment(id)
 );
+
+-- Insert data into User table
+-- Root user password: root
+INSERT INTO Application_User (username, password, active) values
+('root', '$2a$12$fhcuBeVotQ4.rZtjnNuIy.Q8.n3BpD6nKHDD.byYCrhTyhnbFDYR2', true);
 
 -- Insert data into Patient table
 INSERT INTO Patient (name, date_of_birth, gender, address, phone, email) VALUES
