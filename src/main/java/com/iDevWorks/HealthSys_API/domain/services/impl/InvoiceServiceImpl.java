@@ -4,7 +4,6 @@ import com.iDevWorks.HealthSys_API.domain.entities.InvoiceEntity;
 import com.iDevWorks.HealthSys_API.domain.services.IInvoiceService;
 import com.iDevWorks.HealthSys_API.infrastructure.repositories.InvoiceRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,8 +12,11 @@ import java.util.Optional;
 
 @Service
 public class InvoiceServiceImpl implements IInvoiceService {
-    @Autowired
-    private InvoiceRepository repository;
+    private final InvoiceRepository repository;
+
+    public InvoiceServiceImpl(InvoiceRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public List<InvoiceEntity> findAll() {

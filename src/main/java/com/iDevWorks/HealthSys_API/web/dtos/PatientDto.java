@@ -9,7 +9,7 @@ import lombok.Data;
 import java.time.LocalDate;
 
 @Data
-public class PatientRequestDto {
+public class PatientDto {
     @NotNull(message = "The parameter 'name' is required")
     @Size(max = 255)
     private String name;

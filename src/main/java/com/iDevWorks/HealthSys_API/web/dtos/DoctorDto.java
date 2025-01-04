@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class DoctorRequestDto {
+public class DoctorDto {
     @NotNull(message = "The parameter 'name' is required")
     @Size(max = 255)
     private String name;

@@ -50,7 +50,7 @@ CREATE TABLE Invoice (
   CONSTRAINT fk_appointment_invoice FOREIGN KEY (appointment_id) REFERENCES Appointment(id)
 );
 
--- Insert data into User table
+-- Insert data into Application_User table
 -- Root user password: root
 INSERT INTO Application_User (username, password, active) values
 ('root', '$2a$12$fhcuBeVotQ4.rZtjnNuIy.Q8.n3BpD6nKHDD.byYCrhTyhnbFDYR2', true);

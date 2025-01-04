@@ -14,10 +14,6 @@ import java.time.LocalDateTime;
  */
 public final class MapperObjectUtil {
 
-    private MapperObjectUtil() {
-        // Prevent instantiation
-    }
-
     /**
      * Maps a {@link UserDto} to a {@link UserEntity}.
      *
@@ -35,13 +31,13 @@ public final class MapperObjectUtil {
     }
 
     /**
-     * Maps a {@link PatientRequestDto} to a {@link PatientEntity}.
+     * Maps a {@link PatientDto} to a {@link PatientEntity}.
      *
      * @param id  the ID of the patient.
-     * @param dto the {@link PatientRequestDto} containing patient data.
+     * @param dto the {@link PatientDto} containing patient data.
      * @return a {@link PatientEntity} representing the patient.
      */
-    public static PatientEntity toPatientEntity(long id, PatientRequestDto dto) {
+    public static PatientEntity toPatientEntity(long id, PatientDto dto) {
         return new PatientEntity(
                 id,
                 dto.getName(),
@@ -54,13 +50,13 @@ public final class MapperObjectUtil {
     }
 
     /**
-     * Maps a {@link DoctorRequestDto} to a {@link DoctorEntity}.
+     * Maps a {@link DoctorDto} to a {@link DoctorEntity}.
      *
      * @param id  the ID of the doctor.
-     * @param dto the {@link DoctorRequestDto} containing doctor data.
+     * @param dto the {@link DoctorDto} containing doctor data.
      * @return a {@link DoctorEntity} representing the doctor.
      */
-    public static DoctorEntity toDoctorEntity(long id, DoctorRequestDto dto) {
+    public static DoctorEntity toDoctorEntity(long id, DoctorDto dto) {
         return new DoctorEntity(
                 id,
                 dto.getName(),

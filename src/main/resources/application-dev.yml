@@ -16,5 +16,6 @@ spring:
       hibernate:
         format_sql: true
 jwt:
-  secret: Vqf(r#m`$*[kWsx6%;B5Se!QD.@uTLgyAh~3ZH}"KG{U7Cd
+  secret: zrqrA4dhLa7J00OPjQiA4PiPweTNMVx1u6MFn48uW7pBla0
   expiration: 300000 # 5 minutes in milliseconds
+  issuer: healthSys-api

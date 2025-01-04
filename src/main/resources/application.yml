@@ -6,5 +6,5 @@ spring:
   application:
     name: HealthSys-API
   profiles:
-    active: dev # Default profile
+    active: dev
 

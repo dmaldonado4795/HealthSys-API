@@ -4,7 +4,6 @@ import com.iDevWorks.HealthSys_API.domain.entities.MedicalHistoryEntity;
 import com.iDevWorks.HealthSys_API.domain.services.IMedicalHistoryService;
 import com.iDevWorks.HealthSys_API.infrastructure.repositories.MedicalHistoryRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,8 +12,11 @@ import java.util.Optional;
 
 @Service
 public class MedicalHistoryServiceImpl implements IMedicalHistoryService {
-    @Autowired
-    private MedicalHistoryRepository repository;
+    private final MedicalHistoryRepository repository;
+
+    public MedicalHistoryServiceImpl(MedicalHistoryRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public List<MedicalHistoryEntity> findAll() {
@@ -33,7 +35,7 @@ public class MedicalHistoryServiceImpl implements IMedicalHistoryService {
 
     @Override
     public MedicalHistoryEntity update(MedicalHistoryEntity entity) {
-        return repository.findById(entity.getHostoryId()).map(resp -> {
+        return repository.findById(entity.getHistoryId()).map(resp -> {
             if (!Objects.equals(resp.getDescription(), entity.getDescription()))
                 resp.setDescription(entity.getDescription());
             if (!Objects.equals(resp.getPatient(), entity.getPatient()))

@@ -4,7 +4,6 @@ import com.iDevWorks.HealthSys_API.domain.entities.PatientEntity;
 import com.iDevWorks.HealthSys_API.domain.services.IPatientService;
 import com.iDevWorks.HealthSys_API.infrastructure.repositories.PatientRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,8 +12,11 @@ import java.util.Optional;
 
 @Service
 public class PatientServiceImpl implements IPatientService {
-    @Autowired
-    private PatientRepository repository;
+    private final PatientRepository repository;
+
+    public PatientServiceImpl(PatientRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public List<PatientEntity> findAll() {

@@ -4,7 +4,6 @@ import com.iDevWorks.HealthSys_API.domain.entities.UserEntity;
 import com.iDevWorks.HealthSys_API.domain.services.IUserService;
 import com.iDevWorks.HealthSys_API.infrastructure.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +13,13 @@ import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements IUserService {
-    @Autowired
-    private UserRepository repository;
-    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final UserRepository repository;
+    private final BCryptPasswordEncoder passwordEncoder;
+
+    public UserServiceImpl(UserRepository repository) {
+        this.repository = repository;
+        passwordEncoder = new BCryptPasswordEncoder();
+    }
 
     @Override
     public List<UserEntity> findAll() {

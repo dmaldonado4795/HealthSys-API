@@ -16,13 +16,6 @@ public final class ResponseHelper {
     public static final String ERROR_KEY = "error";
 
     /**
-     * Private constructor to prevent instantiation of this utility class.
-     */
-    private ResponseHelper() {
-        // Prevents an instance
-    }
-
-    /**
      * Generates a message indicating that no registered item was found for the given parameter.
      *
      * @param param the name of the item that is not registered.
