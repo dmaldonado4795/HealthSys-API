@@ -37,7 +37,7 @@ public class InvoiceController {
             response.put(ResponseHelper.DATA_KEY, invoices);
             return ResponseEntity.ok(response);
         } else {
-            response.put(ResponseHelper.ERROR_KEY, ResponseHelper.NoRegisteredItem("invoices"));
+            response.put(ResponseHelper.MESSAGE_KEY, ResponseHelper.NoRegisteredItem("invoices"));
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
@@ -50,7 +50,7 @@ public class InvoiceController {
             response.put(ResponseHelper.DATA_KEY, invoice);
             return ResponseEntity.ok(response);
         } else {
-            response.put(ResponseHelper.ERROR_KEY, ResponseHelper.ItemNotFound("Invoice"));
+            response.put(ResponseHelper.MESSAGE_KEY, ResponseHelper.ItemNotFound("Invoice"));
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
@@ -61,7 +61,7 @@ public class InvoiceController {
         try {
             Optional<AppointmentEntity> appointment = appointmentService.findById(dto.getAppointment().getAppointmentId());
             if (appointment.isEmpty()) {
-                response.put(ResponseHelper.ERROR_KEY, ResponseHelper.ItemNotFound("Appointment"));
+                response.put(ResponseHelper.MESSAGE_KEY, ResponseHelper.ItemNotFound("Appointment"));
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
             }
 
@@ -69,13 +69,13 @@ public class InvoiceController {
             response.put(ResponseHelper.DATA_KEY, entity);
             return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
-            response.put(ResponseHelper.ERROR_KEY, "Invalid input: " + e.getMessage());
+            response.put(ResponseHelper.MESSAGE_KEY, "Invalid input: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         } catch (EntityNotFoundException e) {
-            response.put(ResponseHelper.ERROR_KEY, e.getMessage());
+            response.put(ResponseHelper.MESSAGE_KEY, e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         } catch (Exception e) {
-            response.put(ResponseHelper.ERROR_KEY, "An unexpected error occurred: " + e.getMessage());
+            response.put(ResponseHelper.MESSAGE_KEY, "An unexpected error occurred: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
@@ -86,7 +86,7 @@ public class InvoiceController {
         try {
             Optional<AppointmentEntity> appointment = appointmentService.findById(dto.getAppointment().getAppointmentId());
             if (appointment.isEmpty()) {
-                response.put(ResponseHelper.ERROR_KEY, ResponseHelper.ItemNotFound("Appointment"));
+                response.put(ResponseHelper.MESSAGE_KEY, ResponseHelper.ItemNotFound("Appointment"));
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
             }
 
@@ -94,13 +94,13 @@ public class InvoiceController {
             response.put(ResponseHelper.DATA_KEY, entity);
             return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
-            response.put(ResponseHelper.ERROR_KEY, "Invalid input: " + e.getMessage());
+            response.put(ResponseHelper.MESSAGE_KEY, "Invalid input: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         } catch (EntityNotFoundException e) {
-            response.put(ResponseHelper.ERROR_KEY, e.getMessage());
+            response.put(ResponseHelper.MESSAGE_KEY, e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         } catch (Exception e) {
-            response.put(ResponseHelper.ERROR_KEY, "An unexpected error occurred: " + e.getMessage());
+            response.put(ResponseHelper.MESSAGE_KEY, "An unexpected error occurred: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }

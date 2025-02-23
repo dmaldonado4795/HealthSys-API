@@ -42,32 +42,33 @@ public class AuthenticationController {
     }
 
     @PostMapping(path = "login")
-    public ResponseEntity<Map<String, String>> login(@Valid @RequestBody AuthenticationDto dto) {
-        Map<String, String> response = new HashMap<>();
+    public ResponseEntity<Map<String, Object>> login(@Valid @RequestBody AuthenticationDto dto) {
+        Map<String, Object> response = new HashMap<>();
         try {
             Optional<UserEntity> userEntity = userService.findByUsername(dto.getUsername());
-            userEntity.ifPresent(entity -> {
-                if (entity.isActive() && passwordEncoder.matches(dto.getPassword(), entity.getPassword())) {
-                    Authentication authentication = authenticationManager.authenticate(
-                            new UsernamePasswordAuthenticationToken(
-                                    dto.getUsername(),
-                                    dto.getPassword()
-                            )
-                    );
+            if (userEntity.isEmpty()) {
+                response.put(ResponseHelper.MESSAGE_KEY, "Invalid username or password");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            }
 
-                    UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-                    String jwt = jwtService.generateToken(userDetails);
-                    response.put("Token", jwt);
-                } else {
-                    response.put(ResponseHelper.ERROR_KEY, ResponseHelper.ItemNotFound(entity.getUsername()));
-                }
-            });
-            return ResponseEntity.status(userEntity.isPresent() ? HttpStatus.OK : HttpStatus.BAD_REQUEST).body(response);
+            UserEntity entity = userEntity.get();
+            if (!entity.isActive() || !passwordEncoder.matches(dto.getPassword(), entity.getPassword())) {
+                response.put(ResponseHelper.MESSAGE_KEY, "Invalid username or password");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            }
+
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(dto.getUsername(), dto.getPassword())
+            );
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            String jwt = jwtService.generateToken(userDetails);
+            response.put("token", jwt);
+            return ResponseEntity.ok(response);
         } catch (EntityNotFoundException e) {
-            response.put(ResponseHelper.ERROR_KEY, e.getMessage());
+            response.put(ResponseHelper.MESSAGE_KEY, e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         } catch (Exception e) {
-            response.put(ResponseHelper.ERROR_KEY, "An unexpected error occurred: " + e.getMessage());
+            response.put(ResponseHelper.MESSAGE_KEY, "An unexpected error occurred: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
