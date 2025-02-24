@@ -32,19 +32,19 @@ CREATE TABLE Appointment (
   CONSTRAINT fk_doctor FOREIGN KEY (doctor_id) REFERENCES Doctor(id)
 );
 
-CREATE TABLE MedicalHistory (
+CREATE TABLE Medical_History (
   id BIGINT AUTO_INCREMENT PRIMARY KEY,
   description TEXT NOT NULL,
   patient_id BIGINT,
   doctor_id BIGINT,
-  lastUpdated DATE NOT NULL,
+  last_updated DATE NOT NULL,
   CONSTRAINT fk_patient_history FOREIGN KEY (patient_id) REFERENCES Patient(id),
   CONSTRAINT fk_doctor_history FOREIGN KEY (doctor_id) REFERENCES Doctor(id)
 );
 
 CREATE TABLE Invoice (
   id BIGINT AUTO_INCREMENT PRIMARY KEY,
-  totalAmount DOUBLE NOT NULL,
+  total_amount DOUBLE NOT NULL,
   date DATE NOT NULL,
   appointment_id BIGINT,
   CONSTRAINT fk_appointment_invoice FOREIGN KEY (appointment_id) REFERENCES Appointment(id)
@@ -74,13 +74,13 @@ INSERT INTO Appointment (date, reason, patient_id, doctor_id) VALUES
 ('2024-09-17', 'Heart palpitations', 2, 2);
 
 -- Insert data into MedicalHistory table
-INSERT INTO MedicalHistory (description, patient_id, doctor_id, lastUpdated) VALUES
+INSERT INTO Medical_History (description, patient_id, doctor_id, last_updated) VALUES
 ('Patient has a history of asthma. Prescribed inhaler.', 1, 1, '2024-09-14'),
 ('No significant medical history.', 2, 2, '2024-09-16'),
 ('Allergic to penicillin. Recommended allergy testing.', 3, 3, '2024-09-15');
 
 -- Insert data into Invoice table
-INSERT INTO Invoice (totalAmount, date, appointment_id) VALUES
-(150.00, '2024-09-15', 1),
-(200.00, '2024-09-16', 2),
-(250.00, '2024-09-17', 3);
+INSERT INTO Invoice (total_amount, date, appointment_id) VALUES
+(150.55, '2024-09-15', 1),
+(200.95, '2024-09-16', 2),
+(250.37, '2024-09-17', 3);

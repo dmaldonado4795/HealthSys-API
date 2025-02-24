@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "MedicalHistory")
+@Table(name = "Invoice")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,8 +18,8 @@ public class InvoiceEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long invoiceId;
+    @Column(name = "total_amount")
     private Double totalAmount;
-    @JsonIgnore
     private LocalDate date;
     @ManyToOne
     @JoinColumn(name = "appointmentId")

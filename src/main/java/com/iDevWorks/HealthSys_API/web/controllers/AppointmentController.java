@@ -110,7 +110,7 @@ public class AppointmentController {
             }
 
             AppointmentEntity entity = appointmentService.update(MapperObjectUtil.toAppointment(id, dto));
-            response.put(ResponseHelper.MESSAGE_KEY, entity);
+            response.put(ResponseHelper.DATA_KEY, entity);
             return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
             response.put(ResponseHelper.MESSAGE_KEY, "Invalid input: " + e.getMessage());

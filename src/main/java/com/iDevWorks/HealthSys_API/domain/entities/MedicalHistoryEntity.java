@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "MedicalHistory")
+@Table(name = "Medical_History")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,6 +25,6 @@ public class MedicalHistoryEntity {
     @ManyToOne
     @JoinColumn(name = "doctorId")
     private DoctorEntity doctor;
-    @JsonIgnore
+    @Column(name = "last_updated")
     private LocalDateTime lastUpdated;
 }
