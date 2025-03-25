@@ -44,7 +44,7 @@ public class AppointmentController {
             response.put(ResponseHelper.DATA_KEY, appointments);
             return ResponseEntity.ok(response);
         } else {
-            response.put(ResponseHelper.ERROR_KEY, ResponseHelper.NoRegisteredItem("appointments"));
+            response.put(ResponseHelper.MESSAGE_KEY, ResponseHelper.NoRegisteredItem("appointments"));
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
@@ -57,7 +57,7 @@ public class AppointmentController {
             response.put(ResponseHelper.DATA_KEY, appointment);
             return ResponseEntity.ok(response);
         } else {
-            response.put(ResponseHelper.ERROR_KEY, ResponseHelper.ItemNotFound("Appointment"));
+            response.put(ResponseHelper.MESSAGE_KEY, ResponseHelper.ItemNotFound("Appointment"));
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
@@ -68,13 +68,13 @@ public class AppointmentController {
         try {
             Optional<DoctorEntity> doctorEntity = doctorService.findById(dto.getDoctor().getDoctorId());
             if (doctorEntity.isEmpty()) {
-                response.put(ResponseHelper.ERROR_KEY, ResponseHelper.ItemNotFound("Doctor"));
+                response.put(ResponseHelper.MESSAGE_KEY, ResponseHelper.ItemNotFound("Doctor"));
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
             }
 
             Optional<PatientEntity> patientEntity = patientService.findById(dto.getPatient().getPatientId());
             if (patientEntity.isEmpty()) {
-                response.put(ResponseHelper.ERROR_KEY, ResponseHelper.ItemNotFound("Patient"));
+                response.put(ResponseHelper.MESSAGE_KEY, ResponseHelper.ItemNotFound("Patient"));
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
             }
 
@@ -82,13 +82,13 @@ public class AppointmentController {
             response.put(ResponseHelper.DATA_KEY, entity);
             return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
-            response.put(ResponseHelper.ERROR_KEY, "Invalid input: " + e.getMessage());
+            response.put(ResponseHelper.MESSAGE_KEY, "Invalid input: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         } catch (EntityNotFoundException e) {
-            response.put(ResponseHelper.ERROR_KEY, e.getMessage());
+            response.put(ResponseHelper.MESSAGE_KEY, e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         } catch (Exception e) {
-            response.put(ResponseHelper.ERROR_KEY, "An unexpected error occurred: " + e.getMessage());
+            response.put(ResponseHelper.MESSAGE_KEY, "An unexpected error occurred: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
@@ -99,27 +99,27 @@ public class AppointmentController {
         try {
             Optional<DoctorEntity> doctorEntity = doctorService.findById(dto.getDoctor().getDoctorId());
             if (doctorEntity.isEmpty()) {
-                response.put(ResponseHelper.ERROR_KEY, ResponseHelper.NoRegisteredItem("Doctor"));
+                response.put(ResponseHelper.MESSAGE_KEY, ResponseHelper.NoRegisteredItem("Doctor"));
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
             }
 
             Optional<PatientEntity> patientEntity = patientService.findById(dto.getPatient().getPatientId());
             if (patientEntity.isEmpty()) {
-                response.put(ResponseHelper.ERROR_KEY, ResponseHelper.NoRegisteredItem("Patient"));
+                response.put(ResponseHelper.MESSAGE_KEY, ResponseHelper.NoRegisteredItem("Patient"));
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
             }
 
             AppointmentEntity entity = appointmentService.update(MapperObjectUtil.toAppointment(id, dto));
-            response.put(ResponseHelper.ERROR_KEY, entity);
+            response.put(ResponseHelper.DATA_KEY, entity);
             return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
-            response.put(ResponseHelper.ERROR_KEY, "Invalid input: " + e.getMessage());
+            response.put(ResponseHelper.MESSAGE_KEY, "Invalid input: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         } catch (EntityNotFoundException e) {
-            response.put(ResponseHelper.ERROR_KEY, e.getMessage());
+            response.put(ResponseHelper.MESSAGE_KEY, e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         } catch (Exception e) {
-            response.put(ResponseHelper.ERROR_KEY, "An unexpected error occurred: " + e.getMessage());
+            response.put(ResponseHelper.MESSAGE_KEY, "An unexpected error occurred: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }

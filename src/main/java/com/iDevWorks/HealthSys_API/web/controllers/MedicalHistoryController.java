@@ -44,7 +44,7 @@ public class MedicalHistoryController {
             response.put(ResponseHelper.DATA_KEY, medicalHistories);
             return ResponseEntity.ok(response);
         } else {
-            response.put(ResponseHelper.ERROR_KEY, ResponseHelper.NoRegisteredItem("medical histories"));
+            response.put(ResponseHelper.MESSAGE_KEY, ResponseHelper.NoRegisteredItem("medical histories"));
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
@@ -57,7 +57,7 @@ public class MedicalHistoryController {
             response.put(ResponseHelper.DATA_KEY, medicalHistory);
             return ResponseEntity.ok(response);
         } else {
-            response.put(ResponseHelper.ERROR_KEY, ResponseHelper.ItemNotFound("Medical history"));
+            response.put(ResponseHelper.MESSAGE_KEY, ResponseHelper.ItemNotFound("Medical history"));
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
@@ -68,13 +68,13 @@ public class MedicalHistoryController {
         try {
             Optional<DoctorEntity> doctorEntity = doctorService.findById(dto.getDoctor().getDoctorId());
             if (doctorEntity.isEmpty()) {
-                response.put(ResponseHelper.ERROR_KEY, ResponseHelper.ItemNotFound("Doctor"));
+                response.put(ResponseHelper.MESSAGE_KEY, ResponseHelper.ItemNotFound("Doctor"));
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
             }
 
             Optional<PatientEntity> patientEntity = patientService.findById(dto.getPatient().getPatientId());
             if (patientEntity.isEmpty()) {
-                response.put(ResponseHelper.ERROR_KEY, ResponseHelper.ItemNotFound("Patient"));
+                response.put(ResponseHelper.MESSAGE_KEY, ResponseHelper.ItemNotFound("Patient"));
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
             }
 
@@ -82,13 +82,13 @@ public class MedicalHistoryController {
             response.put(ResponseHelper.DATA_KEY, medicalHistoryEntity);
             return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
-            response.put(ResponseHelper.ERROR_KEY, "Invalid input: " + e.getMessage());
+            response.put(ResponseHelper.MESSAGE_KEY, "Invalid input: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         } catch (EntityNotFoundException e) {
-            response.put(ResponseHelper.ERROR_KEY, e.getMessage());
+            response.put(ResponseHelper.MESSAGE_KEY, e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         } catch (Exception e) {
-            response.put(ResponseHelper.ERROR_KEY, "An unexpected error occurred: " + e.getMessage());
+            response.put(ResponseHelper.MESSAGE_KEY, "An unexpected error occurred: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
@@ -99,13 +99,13 @@ public class MedicalHistoryController {
         try {
             Optional<DoctorEntity> doctorEntity = doctorService.findById(dto.getDoctor().getDoctorId());
             if (doctorEntity.isEmpty()) {
-                response.put(ResponseHelper.ERROR_KEY, ResponseHelper.ItemNotFound("Doctor"));
+                response.put(ResponseHelper.MESSAGE_KEY, ResponseHelper.ItemNotFound("Doctor"));
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
             }
 
             Optional<PatientEntity> patientEntity = patientService.findById(dto.getPatient().getPatientId());
             if (patientEntity.isEmpty()) {
-                response.put(ResponseHelper.ERROR_KEY, ResponseHelper.ItemNotFound("Patient"));
+                response.put(ResponseHelper.MESSAGE_KEY, ResponseHelper.ItemNotFound("Patient"));
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
             }
 
@@ -113,13 +113,13 @@ public class MedicalHistoryController {
             response.put(ResponseHelper.DATA_KEY, medicalHistoryEntity);
             return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
-            response.put(ResponseHelper.ERROR_KEY, "Invalid input: " + e.getMessage());
+            response.put(ResponseHelper.MESSAGE_KEY, "Invalid input: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         } catch (EntityNotFoundException e) {
-            response.put(ResponseHelper.ERROR_KEY, e.getMessage());
+            response.put(ResponseHelper.MESSAGE_KEY, e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         } catch (Exception e) {
-            response.put(ResponseHelper.ERROR_KEY, "An unexpected error occurred: " + e.getMessage());
+            response.put(ResponseHelper.MESSAGE_KEY, "An unexpected error occurred: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }

@@ -7,4 +7,6 @@ spring:
     name: HealthSys-API
   profiles:
     active: dev
-
+logging:
+  level:
+    org.springframework.security: DEBUG

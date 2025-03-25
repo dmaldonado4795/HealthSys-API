@@ -33,7 +33,7 @@ public class PatientController {
             response.put(ResponseHelper.DATA_KEY, patients);
             return ResponseEntity.ok(response);
         } else {
-            response.put(ResponseHelper.ERROR_KEY, "No registered patients found");
+            response.put(ResponseHelper.MESSAGE_KEY, "No registered patients found");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
@@ -46,7 +46,7 @@ public class PatientController {
             response.put(ResponseHelper.DATA_KEY, patient.get());
             return ResponseEntity.ok(response);
         } else {
-            response.put(ResponseHelper.ERROR_KEY, "Patient not found");
+            response.put(ResponseHelper.MESSAGE_KEY, "Patient not found");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
@@ -59,13 +59,13 @@ public class PatientController {
             response.put(ResponseHelper.DATA_KEY, entity);
             return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
-            response.put(ResponseHelper.ERROR_KEY, "Invalid input: " + e.getMessage());
+            response.put(ResponseHelper.MESSAGE_KEY, "Invalid input: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         } catch (EntityNotFoundException e) {
-            response.put(ResponseHelper.ERROR_KEY, e.getMessage());
+            response.put(ResponseHelper.MESSAGE_KEY, e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         } catch (Exception e) {
-            response.put(ResponseHelper.ERROR_KEY, "An unexpected error occurred: " + e.getMessage());
+            response.put(ResponseHelper.MESSAGE_KEY, "An unexpected error occurred: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
@@ -78,13 +78,13 @@ public class PatientController {
             response.put(ResponseHelper.DATA_KEY, entity);
             return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
-            response.put(ResponseHelper.ERROR_KEY, "Invalid input: " + e.getMessage());
+            response.put(ResponseHelper.MESSAGE_KEY, "Invalid input: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         } catch (EntityNotFoundException e) {
-            response.put(ResponseHelper.ERROR_KEY, e.getMessage());
+            response.put(ResponseHelper.MESSAGE_KEY, e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         } catch (Exception e) {
-            response.put(ResponseHelper.ERROR_KEY, "An unexpected error occurred: " + e.getMessage());
+            response.put(ResponseHelper.MESSAGE_KEY, "An unexpected error occurred: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }

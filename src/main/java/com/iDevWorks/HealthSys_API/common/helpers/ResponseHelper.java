@@ -13,7 +13,7 @@ public final class ResponseHelper {
     /**
      * Key used for storing errors in a response.
      */
-    public static final String ERROR_KEY = "error";
+    public static final String MESSAGE_KEY = "message";
 
     /**
      * Generates a message indicating that no registered item was found for the given parameter.
