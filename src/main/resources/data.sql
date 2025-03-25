@@ -50,6 +50,14 @@ CREATE TABLE Invoice (
   CONSTRAINT fk_appointment_invoice FOREIGN KEY (appointment_id) REFERENCES Appointment(id)
 );
 
+CREATE TABLE Refresh_Token(
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    token VARCHAR(255) NOT NULL,
+    expiry_date TIMESTAMP NOT NULL,
+    CONSTRAINT fk_refresh_token FOREIGN KEY (user_id) REFERENCES Application_User(id)
+);
+
 -- Insert data into Application_User table
 -- Root user password: root
 INSERT INTO Application_User (username, password, active) values

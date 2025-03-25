@@ -17,5 +17,6 @@ spring:
         format_sql: true
 jwt:
   secret: zrqrA4dhLa7J00OPjQiA4PiPweTNMVx1u6MFn48uW7pBla0
-  expiration: 3600000
+  expiration: 180000
   issuer: healthSys-api
+  refresh-token-expiration: 604800000
