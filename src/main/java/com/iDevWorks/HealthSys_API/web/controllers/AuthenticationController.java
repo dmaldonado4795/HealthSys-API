@@ -1,6 +1,6 @@
 package com.iDevWorks.HealthSys_API.web.controllers;
 
-import com.iDevWorks.HealthSys_API.common.helpers.ResponseHelper;
+import com.iDevWorks.HealthSys_API.common.helper.ResponseHelper;
 import com.iDevWorks.HealthSys_API.domain.entities.RefreshTokenEntity;
 import com.iDevWorks.HealthSys_API.domain.entities.UserEntity;
 import com.iDevWorks.HealthSys_API.domain.services.IJwtService;
@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.iDevWorks.HealthSys_API.common.api.ApiPath.PATH_V1;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -29,7 +31,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "auth")
+@RequestMapping(path = PATH_V1 + "/auth")
 public class AuthenticationController {
     private final IUserService userService;
     private final IJwtService jwtService;
@@ -68,7 +70,8 @@ public class AuthenticationController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
             }
 
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dto.getUsername(), dto.getPassword()));
+            authenticationManager
+                    .authenticate(new UsernamePasswordAuthenticationToken(dto.getUsername(), dto.getPassword()));
             UserDetails userDetails = userDetailsService.loadUserByUsername(dto.getUsername());
 
             String jwt = jwtService.generateToken(userDetails);
@@ -114,9 +117,7 @@ public class AuthenticationController {
             response.put("token", jwt);
             response.put("refreshToken", newRefreshToken.getToken());
             response.put("timestamp", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-
             return ResponseEntity.ok(response);
-
         } catch (EntityNotFoundException e) {
             response.put(ResponseHelper.MESSAGE_KEY, e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);

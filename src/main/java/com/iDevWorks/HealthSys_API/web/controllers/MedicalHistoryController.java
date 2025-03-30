@@ -1,7 +1,7 @@
 package com.iDevWorks.HealthSys_API.web.controllers;
 
-import com.iDevWorks.HealthSys_API.common.helpers.ResponseHelper;
-import com.iDevWorks.HealthSys_API.common.utils.MapperObjectUtil;
+import com.iDevWorks.HealthSys_API.common.helper.ResponseHelper;
+import com.iDevWorks.HealthSys_API.common.util.MapperObjectUtil;
 import com.iDevWorks.HealthSys_API.domain.entities.DoctorEntity;
 import com.iDevWorks.HealthSys_API.domain.entities.MedicalHistoryEntity;
 import com.iDevWorks.HealthSys_API.domain.entities.PatientEntity;
@@ -9,11 +9,15 @@ import com.iDevWorks.HealthSys_API.domain.services.IDoctorService;
 import com.iDevWorks.HealthSys_API.domain.services.IMedicalHistoryService;
 import com.iDevWorks.HealthSys_API.domain.services.IPatientService;
 import com.iDevWorks.HealthSys_API.web.dtos.MedicalHistoryDto;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import static com.iDevWorks.HealthSys_API.common.api.ApiPath.PATH_V1;
+import static com.iDevWorks.HealthSys_API.common.schema.Schema.BEARER_SCHEMA;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +25,8 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "medical-history")
+@RequestMapping(path = PATH_V1 + "/medical-history")
+@SecurityRequirement(name = BEARER_SCHEMA)
 public class MedicalHistoryController {
     private final IMedicalHistoryService medicalHistoryService;
     private final IPatientService patientService;
@@ -78,7 +83,8 @@ public class MedicalHistoryController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
             }
 
-            MedicalHistoryEntity medicalHistoryEntity = medicalHistoryService.save(MapperObjectUtil.toMedicalHistory(0, dto));
+            MedicalHistoryEntity medicalHistoryEntity = medicalHistoryService
+                    .save(MapperObjectUtil.toMedicalHistory(0, dto));
             response.put(ResponseHelper.DATA_KEY, medicalHistoryEntity);
             return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
@@ -94,7 +100,8 @@ public class MedicalHistoryController {
     }
 
     @PutMapping(path = "update/{id}")
-    public ResponseEntity<Map<String, Object>> updateMedicalHistory(@PathVariable long id, @Valid @RequestBody MedicalHistoryDto dto) {
+    public ResponseEntity<Map<String, Object>> updateMedicalHistory(@PathVariable long id,
+            @Valid @RequestBody MedicalHistoryDto dto) {
         Map<String, Object> response = new HashMap<>();
         try {
             Optional<DoctorEntity> doctorEntity = doctorService.findById(dto.getDoctor().getDoctorId());
@@ -109,7 +116,8 @@ public class MedicalHistoryController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
             }
 
-            MedicalHistoryEntity medicalHistoryEntity = medicalHistoryService.update(MapperObjectUtil.toMedicalHistory(id, dto));
+            MedicalHistoryEntity medicalHistoryEntity = medicalHistoryService
+                    .update(MapperObjectUtil.toMedicalHistory(id, dto));
             response.put(ResponseHelper.DATA_KEY, medicalHistoryEntity);
             return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {

@@ -1,4 +1,4 @@
-package com.iDevWorks.HealthSys_API.common.helpers;
+package com.iDevWorks.HealthSys_API.common.helper;
 
 /**
  * Helper class for creating standardized response messages and managing response keys.
