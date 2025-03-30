@@ -1,15 +1,19 @@
 package com.iDevWorks.HealthSys_API.web.controllers;
 
-import com.iDevWorks.HealthSys_API.common.helpers.ResponseHelper;
-import com.iDevWorks.HealthSys_API.common.utils.MapperObjectUtil;
+import com.iDevWorks.HealthSys_API.common.helper.ResponseHelper;
+import com.iDevWorks.HealthSys_API.common.util.MapperObjectUtil;
 import com.iDevWorks.HealthSys_API.domain.entities.PatientEntity;
 import com.iDevWorks.HealthSys_API.domain.services.IPatientService;
 import com.iDevWorks.HealthSys_API.web.dtos.PatientDto;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import static com.iDevWorks.HealthSys_API.common.api.ApiPath.PATH_V1;
+import static com.iDevWorks.HealthSys_API.common.schema.Schema.BEARER_SCHEMA;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +21,8 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "patient")
+@RequestMapping(path = PATH_V1 + "/patient")
+@SecurityRequirement(name = BEARER_SCHEMA)
 public class PatientController {
     private final IPatientService service;
 
@@ -71,7 +76,8 @@ public class PatientController {
     }
 
     @PutMapping(path = "update/{id}")
-    public ResponseEntity<Map<String, Object>> updatePatient(@PathVariable long id, @Valid @RequestBody PatientDto dto) {
+    public ResponseEntity<Map<String, Object>> updatePatient(@PathVariable long id,
+            @Valid @RequestBody PatientDto dto) {
         Map<String, Object> response = new HashMap<>();
         try {
             PatientEntity entity = service.update(MapperObjectUtil.toPatientEntity(id, dto));

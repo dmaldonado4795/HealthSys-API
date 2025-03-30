@@ -1,4 +1,4 @@
-package com.iDevWorks.HealthSys_API.common.utils;
+package com.iDevWorks.HealthSys_API.common.util;
 
 import com.iDevWorks.HealthSys_API.domain.entities.*;
 import com.iDevWorks.HealthSys_API.web.dtos.*;

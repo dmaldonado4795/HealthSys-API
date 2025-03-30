@@ -1,17 +1,21 @@
 package com.iDevWorks.HealthSys_API.web.controllers;
 
-import com.iDevWorks.HealthSys_API.common.helpers.ResponseHelper;
-import com.iDevWorks.HealthSys_API.common.utils.MapperObjectUtil;
+import com.iDevWorks.HealthSys_API.common.helper.ResponseHelper;
+import com.iDevWorks.HealthSys_API.common.util.MapperObjectUtil;
 import com.iDevWorks.HealthSys_API.domain.entities.AppointmentEntity;
 import com.iDevWorks.HealthSys_API.domain.entities.InvoiceEntity;
 import com.iDevWorks.HealthSys_API.domain.services.IAppointmentService;
 import com.iDevWorks.HealthSys_API.domain.services.IInvoiceService;
 import com.iDevWorks.HealthSys_API.web.dtos.InvoiceDto;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import static com.iDevWorks.HealthSys_API.common.api.ApiPath.PATH_V1;
+import static com.iDevWorks.HealthSys_API.common.schema.Schema.BEARER_SCHEMA;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +23,8 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "invoice")
+@RequestMapping(path = PATH_V1 + "/invoice")
+@SecurityRequirement(name = BEARER_SCHEMA)
 public class InvoiceController {
     private final IAppointmentService appointmentService;
     private final IInvoiceService invoiceService;
@@ -59,7 +64,8 @@ public class InvoiceController {
     public ResponseEntity<Map<String, Object>> saveInvoice(@Valid @RequestBody InvoiceDto dto) {
         Map<String, Object> response = new HashMap<>();
         try {
-            Optional<AppointmentEntity> appointment = appointmentService.findById(dto.getAppointment().getAppointmentId());
+            Optional<AppointmentEntity> appointment = appointmentService
+                    .findById(dto.getAppointment().getAppointmentId());
             if (appointment.isEmpty()) {
                 response.put(ResponseHelper.MESSAGE_KEY, ResponseHelper.ItemNotFound("Appointment"));
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
@@ -81,10 +87,12 @@ public class InvoiceController {
     }
 
     @PutMapping(path = "update/{id}")
-    public ResponseEntity<Map<String, Object>> updateInvoice(@PathVariable long id, @Valid @RequestBody InvoiceDto dto) {
+    public ResponseEntity<Map<String, Object>> updateInvoice(@PathVariable long id,
+            @Valid @RequestBody InvoiceDto dto) {
         Map<String, Object> response = new HashMap<>();
         try {
-            Optional<AppointmentEntity> appointment = appointmentService.findById(dto.getAppointment().getAppointmentId());
+            Optional<AppointmentEntity> appointment = appointmentService
+                    .findById(dto.getAppointment().getAppointmentId());
             if (appointment.isEmpty()) {
                 response.put(ResponseHelper.MESSAGE_KEY, ResponseHelper.ItemNotFound("Appointment"));
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);

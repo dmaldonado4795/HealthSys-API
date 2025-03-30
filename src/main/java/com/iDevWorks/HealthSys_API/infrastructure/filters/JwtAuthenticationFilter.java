@@ -17,16 +17,33 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.Optional;
 
+/**
+ * Filter for handling JWT authentication
+ * Extends OncePerRequestFilter to ensure a single execution per request dispatch
+ */
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final IJwtService iJwtService;
     private final UserDetailsService userDetailsService;
 
+    /**
+     * Constructor for JwtAuthenticationFilter
+     * @param iJwtService Service for JWT operations
+     * @param userDetailsService Service to load user-specific data
+     */
     public JwtAuthenticationFilter(IJwtService iJwtService, UserDetailsService userDetailsService) {
         this.iJwtService = iJwtService;
         this.userDetailsService = userDetailsService;
     }
 
+    /**
+     * Internal filter method that handles the JWT authentication process
+     * @param request The HTTP request
+     * @param response The HTTP response
+     * @param filterChain The filter chain
+     * @throws ServletException If a servlet error occurs
+     * @throws IOException If an I/O error occurs
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
@@ -59,6 +76,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
+    /**
+     * Extracts the JWT token from the request's Authorization header
+     * @param request The HTTP request
+     * @return Optional containing the JWT token if present and valid, empty otherwise
+     */
     private Optional<String> extractTokenFromRequest(HttpServletRequest request) {
         String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 
